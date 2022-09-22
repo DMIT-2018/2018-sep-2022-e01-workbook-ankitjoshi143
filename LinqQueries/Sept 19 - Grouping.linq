@@ -2,7 +2,6 @@
   <Connection>
     <ID>d8951735-46de-49b1-a766-1949a481f84d</ID>
     <NamingServiceVersion>2</NamingServiceVersion>
-    <Persist>true</Persist>
     <Server>.\SQLEXPRESS</Server>
     <AllowDateOnlyTimeOnly>true</AllowDateOnlyTimeOnly>
     <DeferDatabasePopulation>true</DeferDatabasePopulation>
@@ -91,7 +90,8 @@ Albums
 
 Albums
 	.GroupBy(a => new {a.ReleaseLabel, a.ReleaseYear})					
-	.Where(egP => egP.Count() > 2)					
+	.Where(egP => egP.Count() > 2)					// filtering against each group pile
+	.ToList() 		// this forces collection into local memory for further processing trackcountA
 	.Select(eachgroupPile => new 
 		{
 			Label = eachgroupPile.Key.ReleaseLabel,
@@ -102,6 +102,7 @@ Albums
 									{
 										title = egPInstance.Title,
 										artist = egPInstance.Artist.Name,
+										trackcountA = egPInstance.Tracks.Count(),
 										trackcount = egPInstance.Tracks
 															.Select(x => x).Count(),
 										YearOfAlbum = egPInstance.ReleaseYear
