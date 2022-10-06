@@ -2,7 +2,6 @@
   <Connection>
     <ID>d8951735-46de-49b1-a766-1949a481f84d</ID>
     <NamingServiceVersion>2</NamingServiceVersion>
-    <Persist>true</Persist>
     <Server>.\SQLEXPRESS</Server>
     <AllowDateOnlyTimeOnly>true</AllowDateOnlyTimeOnly>
     <DeferDatabasePopulation>true</DeferDatabasePopulation>
@@ -71,7 +70,25 @@ void Main()
 						}
 						);
 	results.Dump();
-	
+
+	//list all albums that are from 1990.
+	//display the album title and artist name.
+	//for eah album, display it's tracks
+
+	var albumtracks = Albums
+					.Where(x => x.ReleaseYear == 1990)
+					.Select(x => new
+					{
+						Title = x.Title,
+						Artist = x.Artist.Name,
+						Tracks = x.Tracks
+								.Select(y => new
+								{
+									Song = y.Name,
+									Genre = y.Genre.Name
+								})
+					})
+					.Dump();
 }
 
 public class CustomerItem
