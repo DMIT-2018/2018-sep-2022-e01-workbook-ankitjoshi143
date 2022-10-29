@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "jquery-validation@1.19.5",
+      "destination": "wwwroot/lib/jquery-validation/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@4.0.0",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
+      "files": [
+        "LICENSE.txt",
+        "package.json",
+        "README.md",
+        "dist/jquery.validate.unobtrusive.js",
+        "dist/jquery.validate.unobtrusive.min.js"
+      ]
+    },
+    {
+      "library": "jquery@3.6.1",
+      "destination": "wwwroot/lib/jquery/"
+    }
+  ]
+}
