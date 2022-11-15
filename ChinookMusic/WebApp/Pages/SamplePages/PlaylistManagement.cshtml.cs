@@ -19,10 +19,10 @@ namespace WebApp.Pages.SamplePages
 
 
         public PlaylistManagementModel(TrackServices trackservices,
-                                PlaylistTrackServices _playlisttrackservices)
+                                PlaylistTrackServices playlisttrackservices)
         {
             _trackServices = trackservices;
-            _playlisttrackServices = _playlisttrackservices;
+            _playlisttrackServices = playlisttrackservices;
         }
         #endregion
 
