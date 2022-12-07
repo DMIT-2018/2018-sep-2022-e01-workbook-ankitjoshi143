@@ -1,0 +1,112 @@
+﻿@page 
+@model WebApp.Pages.Employee.EmployeeRegistrationModel
+@{
+    ViewData["Title"] = "Employee Registration";
+}
+@section CustomCSS{
+        <partial name=_MyCustomCSS />
+}
+<h1>Employee Registration</h1>
+
+@if (Model.HasFeedBack)
+{
+        <blockquote class="success">@Model.FeedBackMessage</blockquote>
+}
+
+@if (Model.HasError)
+{
+        <blockquote class="error">
+        @Model.ErrorMessage
+            <ul>
+            @foreach (var detail in Model.ErrorDetails)
+            {
+                        <li>@detail</li>
+            }
+            </ul>
+        </blockquote>
+}
+
+<form method="post">
+    <section class="setflex">
+        <div class="onehalf">
+            <label>
+                First Name
+                <input type="text" asp-for="firstname"  placeholder="firstname" />
+            </label>
+            <br />
+            <label>
+                Last Name
+                <input type="text" asp-for="lastname" placeholder="lastname" />
+            </label>
+            <br />
+            <div>
+                <label>
+                    Home Phone
+                    <input type="text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{4}" asp-for="homephone" placeholder="homephone" />
+                </label>
+            </div>
+            
+        </div>
+        <div class="onehalf">
+            <br /><br /><br /><br /><br /><br /><br /><br />
+            <button type="submit"
+                name="" asp-page-handler="AddEmployee">
+            Register</button>
+            <br /><br />
+            @*<button type="reset">
+                Clear
+            </button>*@
+            <button type="submit"
+                name="" asp-page-handler="Clear" class="danger">
+            Clear Form</button>
+        </div>
+    </section>    
+    <br />
+    <section>
+        <h2>Verified Skills</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Skill</th>
+                    <th>Level</th>
+                    <th>YOE</th>
+                    <th>Hourly Wage</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model.displayskilllist)
+                {
+                    bool selectedskill = false;
+                    var skill = Model.skilllistselected.SingleOrDefault(x => x.SkillID == item.SkillID);
+                    if (skill != null)
+                    {
+                        selectedskill = skill.SelectedSkill;
+                    }
+                    <tr>
+                        <td>
+                            <input type="hidden" name="skilllistselected.Index" value="@item.SkillID" >
+                            <input type="hidden"
+                               name="skilllistselected[@item.SkillID].SkillID"
+                               value="@item.SkillID">
+                            <input type="checkbox" checked="@selectedskill" name="skilllistselected[@item.SkillID].SelectedSkill" value="true">
+                        </td>
+                        <td>@item.Description</td>
+                        <td>
+                            <input type="radio" name="skilllistselected[@item.SkillID].Level" value="1">Novice
+                            <input type="radio" name="skilllistselected[@item.SkillID].Level" value="2">Proficient
+                            <input type="radio" name="skilllistselected[@item.SkillID].Level" value="3">Expert
+                        </td>
+                        <td>
+                            <input type="text" name="skilllistselected[@item.SkillID].YOE">
+                        </td>
+                        <td>                            
+                            <input type="text" name="skilllistselected[@item.SkillID].HourlyWage">
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </section>
+</form>

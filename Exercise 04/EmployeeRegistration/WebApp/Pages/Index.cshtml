@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@section CustomCSS{
+    <partial name=_MyCustomCSS />
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <header>
+        <h2>Choose one of following page:</h2>
+            <ul>
+                <li>
+                    <a asp-area="" asp-page="/Employee/EmployeeRegistration">Employee Registration</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-page="/Employee/EmployeeSkills">Employee Skills</a>
+                </li>
+            </ul>
+            <p><b class="danger" >NOTE: </b>Created Two Clear button on Employee Registration. One is reset button and other is submit with backend model. Commented out the reset one.</p>
+    </header>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

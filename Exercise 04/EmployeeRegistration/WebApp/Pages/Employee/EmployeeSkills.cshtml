@@ -1,0 +1,79 @@
+﻿@page "{phonenumber?}"
+@model WebApp.Pages.Employee.EmployeeSkillsModel
+@{
+    ViewData["Title"] = "Employee Skills";
+}
+@section CustomCSS{
+        <partial name=_MyCustomCSS />
+}
+<h1>Employee Skills By Home Phone</h1>
+
+@if (Model.HasFeedBack)
+{
+        <blockquote class="success">@Model.FeedBackMessage</blockquote>
+}
+
+@if (Model.HasError)
+{
+        <blockquote class="error">
+        @Model.ErrorMessage
+            <ul>
+            @foreach (var detail in Model.ErrorDetails)
+            {
+                        <li>@detail</li>
+            }
+            </ul>
+        </blockquote>
+}
+
+<form method="post">
+    <label>
+        Employee Home Phone
+        <input type="text" pattern="[0-9]{3}.[0-9]{3}.[0-9]{4}" asp-for="phonenumber" />
+        <br /><br /><br />
+        <button type="submit" asp-page-handler="FetchSkill"
+                title="Fetch SKills">
+           Fetch Skills
+        </button>&nbsp;&nbsp;&nbsp;
+        <button type="submit"
+                name="" asp-page-handler="Clear" class="danger">
+            Clear Form
+        </button>
+    </label>
+</form>
+@if(!string.IsNullOrWhiteSpace(Model.phonenumber))
+{
+    if(Model.skillslist.Count() == 0)
+    {
+        <p style="color:blue;font-weight:bold; font-size:large">
+                            No matching search request.
+        </p>
+    }
+    else
+    {
+         <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Skill Description</th>
+                    <th>Level</th>
+                    <th>YOE</th>
+                    <th>Hourly Wage</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.skillslist)
+                {
+                    <tr>
+                        <td>@item.Employee</td>
+                        <td>@item.Skill</td>
+                        <td>@item.Level</td>
+                        <td>@item.YOE</td>
+                        <td>@item.HourlyWage</td>
+                    </tr>
+                }
+            </tbody>
+         </table>
+    }
+
+}
